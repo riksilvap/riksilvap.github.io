@@ -14,9 +14,7 @@
     }
 
     navigator.bluetooth.requestDevice({
-      filters: [{
-        name: 'Gprinter_CF78'
-      }]
+      acceptAllDevices: true
     })
       .then(function (device) {
         return device.gatt.connect();
