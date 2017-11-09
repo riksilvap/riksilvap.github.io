@@ -17,8 +17,8 @@
         acceptAllDevices: true,
         optionalServices: ['battery_service']
     })
-      .then(function (device) {
-        log('Getting Descriptors...');
+      .then(function (device) {]
+        $target.innerText = 'Conectado em ' + device;
         return device.gatt.connect();
       })
       .then(descriptor => {
