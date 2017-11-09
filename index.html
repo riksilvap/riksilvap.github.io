@@ -1,1 +1,11 @@
 Hello World
+<script type="text/javascript">
+navigator.bluetooth.requestDevice({
+ filters: [{
+   name: 'Francois robot'
+ }],
+ optionalServices: ['battery_service']
+})
+.then(device => { /* ... */ })
+.catch(error => { console.log(error); });
+</script>
