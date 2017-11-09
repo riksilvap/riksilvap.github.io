@@ -26,18 +26,7 @@
         let userDescription = encoder.encode('Defines the time between measurements.');
         return descriptor.writeValue(userDescription);
       })
-      .then(function (server) {
-        //return server.getPrimaryService('battery_service');
-      })
-      .then(function (service) {
-        //return service.getCharacteristic('battery_level');
-      })
-      .then(function (characteristic) {
-        //return characteristic.readValue();
-      })
-      .then(function (value) {
-        //$target.innerHTML = 'Battery percentage is <b>' + value.getUint8(0) + '</b>.';
-      })
+      
       .catch(function (error) {
         $target.innerText = 'Error' + error;
       });
