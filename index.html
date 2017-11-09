@@ -13,11 +13,7 @@
       return;
     }
 
-    navigator.bluetooth.requestDevice({
-        filters: [{
-          services: ['battery_service']
-        }]
-      })
+    navigator.bluetooth.requestDevice()
       .then(function (device) {
         return device.gatt.connect();
       })
