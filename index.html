@@ -14,7 +14,8 @@
     }
 
     navigator.bluetooth.requestDevice({
-      acceptAllDevices: true
+        acceptAllDevices: true,
+  optionalServices: ['battery_service']
     })
       .then(function (device) {
         return device.gatt.connect();
