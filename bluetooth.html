@@ -65,18 +65,21 @@ document.querySelector('button').addEventListener('click', event => {
       
     document.querySelector('#go').onclick = (e) => {
       e.preventDefault();
+      let options = {
+        acceptAllDevices: true
+      }
       // Use the same service UUID as in mbed here!
-      navigator.bluetooth.requestDevice({ filters: [{ services: [ 0x8765 ] }] })
+      navigator.bluetooth.requestDevice(options)
         .then(device => {
           console.log('Found device ' + device.name);
-          alert('Connected over GATT!');
+          alert('Connected over GATT!' + device.name );
           return device.connectGATT();
         })
         //.then( =>
         //  alert('Connected over GATT!');
         //);
         .catch(err => {
-          alert('' + err + ' ' + JSON.stringify(err));
+          alert('ixi' + err + ' ' + JSON.stringify(err));
         });
       };
     </script>
