@@ -14,7 +14,7 @@
         .then(device => {
           console.log('Found device ' + device.name);
           return device.connectGATT();
-        )
+        })
         .then(() =>
           alert('Connected over GATT!');
         });
