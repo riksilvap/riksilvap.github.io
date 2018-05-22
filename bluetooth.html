@@ -69,11 +69,12 @@ document.querySelector('button').addEventListener('click', event => {
       navigator.bluetooth.requestDevice({ filters: [{ services: [ 0x8765 ] }] })
         .then(device => {
           console.log('Found device ' + device.name);
+          alert('Connected over GATT!');
           return device.connectGATT();
         })
-        .then( =>
-          alert('Connected over GATT!');
-        );
+        //.then( =>
+        //  alert('Connected over GATT!');
+        //);
         .catch(err => {
           alert('' + err + ' ' + JSON.stringify(err));
         });
