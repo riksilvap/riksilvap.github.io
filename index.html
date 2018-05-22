@@ -17,7 +17,7 @@
         acceptAllDevices: true,
         optionalServices: ['battery_service']
     })
-      .then(function (device) {]
+      .then(function (device) {
         $target.innerText = 'Conectado em ' + device;
         return device.gatt.connect();
       })
