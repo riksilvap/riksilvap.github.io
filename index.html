@@ -18,7 +18,7 @@
       // Get the bytes for the text
       let encoder = new TextEncoder("utf-8");
       // Add line feed + carriage return chars to text
-      let text = encoder.encode(message.value + '\u000A\u000D');
+      let text = encoder.encode('Quero fazer um teste de impressao de uma linha' + '\u000A\u000D');
       return printCharacteristic.writeValue(text).then(() => {
         $target.innerText += 'Write done.';
       });
@@ -26,7 +26,7 @@
     function sendPrinterData() {
       // Print an image followed by the text
       //sendImageData()
-      .then(sendTextData)
+      sendTextData()
       .then(() => {
         $target.innerText += 'sendprint success!'
       })
