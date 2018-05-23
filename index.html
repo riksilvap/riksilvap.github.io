@@ -2,9 +2,19 @@
   <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level2</button>
 </p>
 
+<p>
+  <button class="btn btn-lg btn-default" onclick="writeTeste('Esse e outro teste')">Escrever teste</button>
+</p>
+
 <p id="target"></p>
 
 <script type="text/javascript">
+  function writeTeste(data) {
+    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
+    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    .then(characteristic => characteristic.writeValue(data));
+  }
+  
   function readBatteryLevel() {
     var $target = document.getElementById('target');
 
@@ -50,12 +60,12 @@
       
       .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
       .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-      .then(characteristic => {
-        // Cache the characteristic
-        target.innerText += 'characteristic' + characteristic;
-        printCharacteristic = characteristic;
-        sendPrinterData();
-      })
+//       .then(characteristic => {
+//         // Cache the characteristic
+//         target.innerText += 'characteristic' + characteristic;
+//         printCharacteristic = characteristic;
+//         sendPrinterData();
+//       })
       
       .then(descriptors => {
         target.innerText += '> Descriptors: ' + descriptors.map(c => c.uuid).join('\n' + ' '.repeat(19));
