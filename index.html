@@ -35,7 +35,7 @@
     
     navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ['battery_service']
+        optionalServices: ['generic_access']
     })
       .then(function (device) {
         $target.innerText += 'Conectado em ' + device;
@@ -51,6 +51,7 @@
       .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
       .then(characteristic => {
         // Cache the characteristic
+        target.innerText += 'characteristic' + characteristic;
         printCharacteristic = characteristic;
         sendPrinterData();
       })
