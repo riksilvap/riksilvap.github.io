@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level2</button>
 </p>
 
 <p id="target"></p>
@@ -35,7 +35,9 @@
     
     navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ['generic_access']
+        filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
     })
       .then(function (device) {
         $target.innerText += 'Conectado em ' + device;
@@ -60,7 +62,7 @@
         target.innerText += '> Descriptors: ' + descriptors.map(c => c.uuid).join('\n' + ' '.repeat(19));
       })
       .catch(error => {
-       $target.innerText += 'Error' + error;
+        $target.innerText += 'Error' + error;
       });
     
   }
