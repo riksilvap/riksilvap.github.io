@@ -1,74 +1,67 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="connect()">connect</button>
-</p>
-
-<p>
-  <button class="btn btn-lg btn-default" onclick="writeTeste('Esse e outro teste')">Escrever teste</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level</button>
 </p>
 
 <p id="target"></p>
 
 <script type="text/javascript">
-  
-  
-  class GenericDevice {
-
-  constructor() {
-    this.device = null;
-    this.onDisconnected = this.onDisconnected.bind(this);
-  }
-  
-  request() {
-    let options = {
-      "filters": [{
-        "name": "Gprinter_CF78",
-        "services": ["000018f0-0000-1000-8000-00805f9b34fb"]
-      }]
-    };
-    return navigator.bluetooth.requestDevice(options)
-    .then(device => {
-      this.device = device;
-      this.device.addEventListener('gattserverdisconnected', this.onDisconnected);
-    });
-  }
-  
-  connect() {
-    if (!this.device) {
-      return Promise.reject('Device is not connected.');
+  function readBatteryLevel() {
+    var $target = document.getElementById('target');
+    if (!('bluetooth' in navigator)) {
+      $target.innerText += 'Bluetooth API not supported.';
+      return;
     }
-    return this.device.gatt.connect();
-  }
-  
-  readTeste() {
-    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => characteristic.readValue());
-  }
-
-  writeTeste(data) {
-    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => characteristic.writeValue(data));
-  }
-
-  disconnect() {
-    if (!this.device) {
-      return Promise.reject('Device is not connected.');
+    let printCharacteristic;
+    let data;
+    function sendTextData() {
+      // Get the bytes for the text
+      let encoder = new TextEncoder("utf-8");
+      // Add line feed + carriage return chars to text
+      let text = encoder.encode('Quero fazer um teste de ' + '\u000A\u000D');
+      return printCharacteristic.writeValue(text).then(() => {
+        $target.innerText += 'Write done.';
+      });
     }
-    return this.device.gatt.disconnect();
+    function sendPrinterData() {
+      // Print an image followed by the text
+      //sendImageData()
+      sendTextData()
+      .then(() => {
+        $target.innerText += 'sendprint success!'
+      })
+      .catch(handleError);
+    }
+    
+    navigator.bluetooth.requestDevice({
+          "filters": [{
+          "name": "Gprinter_CF78",
+          "services": ["000018f0-0000-1000-8000-00805f9b34fb"]
+        }]
+    })
+      .then(function (device) {
+        $target.innerText += 'Conectado em ' + device;
+        return device.gatt.connect();
+      })
+      //.then(descriptor => {
+      //  let encoder = new TextEncoder('utf-8');
+      //  let userDescription = encoder.encode('Defines the time between measurements.');
+      //  return descriptor.writeValue(userDescription);
+      //})
+      
+      .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+      .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+      .then(characteristic => {
+        // Cache the characteristic
+        printCharacteristic = characteristic;
+        sendPrinterData();
+      })
+      
+      .then(descriptors => {
+        target.innerText += '> Descriptors: '; //+ descriptors.map(c => c.uuid).join('\n' + ' '.repeat(19));
+      })
+      .catch(error => {
+       $target.innerText += 'Error2 ' + error;
+      });
+    
   }
-
-  onDisconnected() {
-    console.log('Device is disconnected.');
-  }
-}
-
-var genericDevice = new GenericDevice();
-
-document.querySelector('button').addEventListener('click', event => {
-  genericDevice.request()
-  .then(_ => genericDevice.connect())
-  .then(_ => { /* Do something with genericDevice... */})
-  .catch(error => { console.log(error) });
-});
 </script>
