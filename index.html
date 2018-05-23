@@ -9,26 +9,58 @@
     var $target = document.getElementById('target');
 
     if (!('bluetooth' in navigator)) {
-      $target.innerText = 'Bluetooth API not supported.';
+      $target.innerText += 'Bluetooth API not supported.';
       return;
     }
-
+    let printCharacteristic;
+    let data;
+    function sendTextData() {
+      // Get the bytes for the text
+      let encoder = new TextEncoder("utf-8");
+      // Add line feed + carriage return chars to text
+      let text = encoder.encode(message.value + '\u000A\u000D');
+      return printCharacteristic.writeValue(text).then(() => {
+        $target.innerText += 'Write done.';
+      });
+    }
+    function sendPrinterData() {
+      // Print an image followed by the text
+      //sendImageData()
+      .then(sendTextData)
+      .then(() => {
+        $target.innerText += 'sendprint success!'
+      })
+      .catch(handleError);
+    }
+    
     navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
         optionalServices: ['battery_service']
     })
       .then(function (device) {
-        $target.innerText = 'Conectado em ' + device;
+        $target.innerText += 'Conectado em ' + device;
         return device.gatt.connect();
       })
-      .then(descriptor => {
-        let encoder = new TextEncoder('utf-8');
-        let userDescription = encoder.encode('Defines the time between measurements.');
-        return descriptor.writeValue(userDescription);
+      //.then(descriptor => {
+      //  let encoder = new TextEncoder('utf-8');
+      //  let userDescription = encoder.encode('Defines the time between measurements.');
+      //  return descriptor.writeValue(userDescription);
+      //})
+      
+      .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+      .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+      .then(characteristic => {
+        // Cache the characteristic
+        printCharacteristic = characteristic;
+        sendPrinterData();
       })
       
-      .catch(function (error) {
-        $target.innerText = 'Error' + error;
+      .then(descriptors => {
+        target.innerText += '> Descriptors: ' + descriptors.map(c => c.uuid).join('\n' + ' '.repeat(19));
+      })
+      .catch(error => {
+       $target.innerText += 'Error' + error;
       });
+    
   }
 </script>
