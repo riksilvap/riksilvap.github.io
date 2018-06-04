@@ -45,6 +45,12 @@
     return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
     .then(characteristic => {
+      let encoder = new TextEncoder("utf-8");
+          // Add line feed + carriage return chars to text
+          let text = encoder.encode(message.value + '\u000A\u000D');
+          return printCharacteristic.writeValue(text).then(() => {
+            console.log('Write done.');
+          });
       let encoder = new TextEncoder('utf-8');
          let userDescription = encoder.encode('Defines the time between measurements.');
          return characteristic.writeValue(userDescription);
