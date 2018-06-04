@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar3</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -44,7 +44,12 @@
   writeTeste(data) {
     return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => characteristic.writeValue(data));
+    .then(characteristic => {
+      var value:ByteArray = new ByteArray();
+      value.writeUTFBytes( data );
+      characteristic.writeValue(value)
+    });
+      
   }
 
   disconnect() {
