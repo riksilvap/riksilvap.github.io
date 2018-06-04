@@ -42,6 +42,7 @@ function sendTextData(texto) {
 function conectar () {
   if (printCharacteristic == null) {
     let options = {
+      filters: [ {services: [A, B]} ],
       "acceptAllDevices": true
     };
     navigator.bluetooth.requestDevice(options)
