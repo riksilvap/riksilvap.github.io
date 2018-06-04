@@ -83,14 +83,30 @@ function mostralog(line){
    document.querySelector('#target').textContent += line + '\n';
 };
 var genericDevice = new GenericDevice();
+  let printCharacteristic;
 function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
-  .then(descriptor => {
-    mostralog(descriptor)
-         
-   })
+  .then(server => {
+    mostralog('server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")';
+      server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
+  })
+  .then(service => {
+    mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb")';
+    service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb")
+  })
+  .then(characteristic => {
+    // Cache the characteristic
+    mostralog('characteristic');
+    printCharacteristic = characteristic;
+    let encoder = new TextEncoder("utf-8");
+    // Add line feed + carriage return chars to text
+    let text = encoder.encode('Test de impressao' + '\u000A\u000D');
+    return printCharacteristic.writeValue(text).then(() => {
+      mostralog.log('Write done.');
+    });
+  })
   .catch(error => { mostralog(error) });
 }
   
