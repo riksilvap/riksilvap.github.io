@@ -1,103 +1,62 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar10</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar()</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
+  <button class="btn btn-lg btn-default" onclick="sendTextData('+document.querySelector('#target').value)+'">Alert</button>
 </p>
 <textarea id="target" ></textarea>
 
 
 <script type="text/javascript">
-  class GenericDevice {
-
-  constructor() {
-    this.device = null;
-    this.onDisconnected = this.onDisconnected.bind(this);
-  }
-  //BluetoothRemoteGATTCharacteristic.writeValue()
-  request() {
-    let options = {
-      "acceptAllDevices": true
-    };
-    return navigator.bluetooth.requestDevice(options)
-    .then(device => {
-      this.device = device;
-      this.device.addEventListener('gattserverdisconnected', this.onDisconnected);
-    });
-  }
   
-  connect() {
-    if (!this.device) {
-      return Promise.reject('Device is not connected.');
-    }
-     mostralog('> Found ' + this.device.name);
-     mostralog('Connecting to GATT Server...');
-    return this.device.gatt.connect();
-  }
-  
-  readTeste() {
-    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => characteristic.readValue());
-    mostralog('readTeste');
-  }
-  
-  writeTeste2(){
-    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => {
-      let encoder = new TextEncoder("utf-8");
-          // Add line feed + carriage return chars to text
-          let text = encoder.encode(message.value + '\u000A\u000D');
-          return printCharacteristic.writeValue(text).then(() => {
-            mostralog('Write done.');
-          });
-      let encoder = new TextEncoder('utf-8');
-         let userDescription = encoder.encode('Defines the time between measurements.');
-         return characteristic.writeValue(userDescription);
-      });
-  }
-  writeTeste(data) {
-    let encoder = new TextEncoder("utf-8");
-          // Add line feed + carriage return chars to text
-          let text = encoder.encode(data + '\u000A\u000D');
-          return characteristic.writeValue(text).then(() => {
-            mostralog('Write done.');
-          });
-     
-      
-  }
+let printCharacteristic;
+let index = 0;
+let data;
 
-  disconnect() {
-    if (!this.device) {
-      return Promise.reject('Device is not connected.');
-    }
-    return this.device.gatt.disconnect();
-  }
+function handleError(error) {
+  console.log(error);
+  document.querySelector('#target').value += 'error' + error + '\n';
 
-  onDisconnected() {
-    mostralog('Device is disconnected.');
-  }
 }
 
 function mostralog(line){
    document.querySelector('#target').value += line + '\n';
 };
-var genericDevice = new GenericDevice();
-  let printCharacteristic;
-function readBatteryLevel(){
-  genericDevice.request()
-  .then(_ => genericDevice.connect())
-  .then(_ => { mostralog('/* Do something with genericDevice... */')})
-  .then(_ => readTeste() )
-  .catch(error => { mostralog('readBatteryLevel', error) });
-}
-  
-  function escreva(){
-    genericDevice.writeTeste("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
-  }
 
+function sendTextData(texto) {
+  // Get the bytes for the text
+  let encoder = new TextEncoder("utf-8");
+  // Add line feed + carriage return chars to text
+  let text = encoder.encode(texto + '\u000A\u000D');
+  return printCharacteristic.writeValue(text).then(() => {
+    mostralog('Write done.');
+  });
+}
+
+function conectar () {
+  if (printCharacteristic == null) {
+    let options = {
+      "acceptAllDevices": true
+    };
+    navigator.bluetooth.requestDevice(options)
+    .then(device => {
+      mostralog('> Found ' + device.name);
+      mostralog('Connecting to GATT Server...');
+      return device.gatt.connect();
+    })
+    .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    .then(characteristic => {
+      // Cache the characteristic
+      printCharacteristic = characteristic;
+      sendPrinterData('Isso é um teste...Isso é um teste...Isso é um teste...Isso é um teste...');
+    })
+    .catch(handleError);
+  } else {
+    sendPrinterData('Segundo testeSegundo testeSegundo testeSegundo testeSegundo testeSegundo teste');
+  }
+};
 </script>
