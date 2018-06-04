@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar5</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar6</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="escreva2('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -89,11 +89,11 @@ function readBatteryLevel(){
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
   .then(server => {
-    mostralog('server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")';
+    mostralog('server.getPrimaryService');
       server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
   })
   .then(service => {
-    mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb")';
+    mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb"');
     service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb")
   })
   .then(characteristic => {
