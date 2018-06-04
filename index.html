@@ -5,7 +5,7 @@
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="sendTextData('+document.querySelector('#target').value)+'">Alert</button>
+  <button class="btn btn-lg btn-default" onclick="sendtextarea()">sendtextarea</button>
 </p>
 <textarea id="target" ></textarea>
 
@@ -22,6 +22,9 @@ function handleError(error) {
 
 }
 
+function sendtextarea(){
+   sendTextData(document.querySelector('#target').value);
+}
 function mostralog(line){
    document.querySelector('#target').value += line + '\n';
 };
