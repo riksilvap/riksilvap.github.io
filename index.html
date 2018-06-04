@@ -2,7 +2,7 @@
   <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar5</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="writeTeste2('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="escreva2('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
@@ -88,8 +88,8 @@ function readBatteryLevel(){
   .catch(error => { mostralog(error) });
 }
   
-  function escreva(){
-    genericDevice.writeTeste("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
+  function escreva2(){
+    genericDevice.writeTeste2("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
   }
 
 </script>
