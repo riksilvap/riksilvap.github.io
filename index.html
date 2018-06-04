@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar3</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar4</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -16,7 +16,7 @@
     this.device = null;
     this.onDisconnected = this.onDisconnected.bind(this);
   }
-  
+  //BluetoothRemoteGATTCharacteristic.writeValue()
   request() {
     let options = {
       "acceptAllDevices": true
@@ -45,7 +45,7 @@
     return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
     .then(characteristic => {
-      var value:ByteArray = new ByteArray();
+      var value = new ByteArray();
       value.writeUTFBytes( data );
       characteristic.writeValue(value)
     });
@@ -72,6 +72,11 @@ function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
+  .then(descriptor => {
+         let encoder = new TextEncoder('utf-8');
+         let userDescription = encoder.encode('Defines the time between measurements.');
+         return descriptor.writeValue(userDescription);
+       })
   .catch(error => { mostralog(error) });
 }
   
