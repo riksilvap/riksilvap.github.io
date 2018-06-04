@@ -2,7 +2,7 @@
   <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="escreva()">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p id="target"></p>
 
@@ -68,7 +68,7 @@ function readBatteryLevel(){
 }
   
   function escreva(){
-    genericDevice.writeTeste("Um segundo teste")
+    genericDevice.writeTeste("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
   }
 document.querySelector('button').addEventListener('click', event => {
   genericDevice.request()
