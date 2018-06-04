@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Read Bluetooth device's battery level</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -19,7 +19,6 @@
   
   request() {
     let options = {
-      "filters": [],
       "acceptAllDevices": true
     };
     return navigator.bluetooth.requestDevice(options)
