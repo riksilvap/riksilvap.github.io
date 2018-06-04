@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar9</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar10</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -60,10 +60,13 @@
       });
   }
   writeTeste(data) {
-
-      var value = new ByteArray();
-      value.writeUTFBytes( data );
-      characteristic.writeValue(value)
+    let encoder = new TextEncoder("utf-8");
+          // Add line feed + carriage return chars to text
+          let text = encoder.encode(data + '\u000A\u000D');
+          return characteristic.writeValue(text).then(() => {
+            mostralog('Write done.');
+          });
+     
       
   }
 
