@@ -16,10 +16,8 @@
   
   request() {
     let options = {
-      "filters": [{
-        "name": "Gprinter_CF78",
-        "services": ["000018f0-0000-1000-8000-00805f9b34fb"]
-      }]
+      "filters": [],
+      "acceptAllDevices": true
     };
     return navigator.bluetooth.requestDevice(options)
     .then(device => {
@@ -55,7 +53,7 @@
   }
 
   onDisconnected() {
-    console.log('Device is disconnected.');
+    alert('Device is disconnected.');
   }
 }
 
@@ -63,17 +61,12 @@ var genericDevice = new GenericDevice();
 function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
-  .then(_ => { /* Do something with genericDevice... */})
-  .catch(error => { console.log(error) });
+  .then(_ => { alert('/* Do something with genericDevice... */')})
+  .catch(error => { alert(error) });
 }
   
   function escreva(){
     genericDevice.writeTeste("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
   }
-document.querySelector('button').addEventListener('click', event => {
-  genericDevice.request()
-  .then(_ => genericDevice.connect())
-  .then(_ => { /* Do something with genericDevice... */})
-  .catch(error => { console.log(error) });
-});
+
 </script>
