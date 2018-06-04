@@ -5,7 +5,7 @@
   <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="Alert('testes.')">Alert</button>
+  <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
 </p>
 <p id="target"></p>
 
@@ -56,16 +56,19 @@
   }
 
   onDisconnected() {
-    alert('Device is disconnected.');
+    mostralog('Device is disconnected.');
   }
 }
 
+function mostralog(line){
+   document.querySelector('#target').textContent += line + '\n';
+};
 var genericDevice = new GenericDevice();
 function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
-  .then(_ => { alert('/* Do something with genericDevice... */')})
-  .catch(error => { alert(error) });
+  .then(_ => { mostralog('/* Do something with genericDevice... */')})
+  .catch(error => { mostralog(error) });
 }
   
   function escreva(){
