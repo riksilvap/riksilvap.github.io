@@ -88,14 +88,14 @@ function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
-  .then(server => {
-    mostralog('server.getPrimaryService');
-      server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-  })
-  .then(service => {
-    mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb"');
-    service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb")
-  })
+//   .then(server => {
+//     mostralog('server.getPrimaryService');
+//       server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
+//   })
+//   .then(service => {
+//     mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb"');
+//     service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb")
+//   })
   .then(characteristic => {
     // Cache the characteristic
     mostralog('characteristic');
