@@ -7,7 +7,8 @@
 <p>
   <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
 </p>
-<p id="target"></p>
+<textarea id="target" rows="4" cols="50"></textarea>
+
 
 <script type="text/javascript">
   class GenericDevice {
@@ -83,7 +84,7 @@
 }
 
 function mostralog(line){
-   document.querySelector('#target').textContent += line + '\n';
+   document.querySelector('#target').value += line + '\n';
 };
 var genericDevice = new GenericDevice();
   let printCharacteristic;
@@ -91,7 +92,7 @@ function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
-  .then(_ => readTeste )
+  .then(_ => readTeste() )
   .catch(error => { mostralog('readBatteryLevel', error) });
 }
   
