@@ -1,8 +1,8 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar4</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar5</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="writeTeste2('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
@@ -40,7 +40,16 @@
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
     .then(characteristic => characteristic.readValue());
   }
-
+  
+  writeTeste2(){
+    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
+    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    .then(characteristic => {
+      let encoder = new TextEncoder('utf-8');
+         let userDescription = encoder.encode('Defines the time between measurements.');
+         return characteristic.writeValue(userDescription);
+      });
+  }
   writeTeste(data) {
     return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
@@ -73,10 +82,9 @@ function readBatteryLevel(){
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
   .then(descriptor => {
-         let encoder = new TextEncoder('utf-8');
-         let userDescription = encoder.encode('Defines the time between measurements.');
-         return descriptor.writeValue(userDescription);
-       })
+    mostralog(descriptor)
+         
+   })
   .catch(error => { mostralog(error) });
 }
   
