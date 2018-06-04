@@ -1,8 +1,8 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar7</button>
+  <button class="btn btn-lg btn-default" onclick="readBatteryLevel()">Conectar8</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="escreva2('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="escreva('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="mostralog('testes.')">Alert</button>
@@ -32,6 +32,8 @@
     if (!this.device) {
       return Promise.reject('Device is not connected.');
     }
+     mostralog('> Found ' + device.name);
+     mostralog('Connecting to GATT Server...');
     return this.device.gatt.connect();
   }
   
@@ -39,6 +41,7 @@
     return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
     .then(characteristic => characteristic.readValue());
+    mostralog('readTeste');
   }
   
   writeTeste2(){
@@ -49,7 +52,7 @@
           // Add line feed + carriage return chars to text
           let text = encoder.encode(message.value + '\u000A\u000D');
           return printCharacteristic.writeValue(text).then(() => {
-            console.log('Write done.');
+            mostralog('Write done.');
           });
       let encoder = new TextEncoder('utf-8');
          let userDescription = encoder.encode('Defines the time between measurements.');
@@ -57,13 +60,10 @@
       });
   }
   writeTeste(data) {
-    return this.device.gatt.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => {
+
       var value = new ByteArray();
       value.writeUTFBytes( data );
       characteristic.writeValue(value)
-    });
       
   }
 
@@ -88,30 +88,12 @@ function readBatteryLevel(){
   genericDevice.request()
   .then(_ => genericDevice.connect())
   .then(_ => { mostralog('/* Do something with genericDevice... */')})
-//   .then(server => {
-//     mostralog('server.getPrimaryService');
-//       server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb")
-//   })
-//   .then(service => {
-//     mostralog('service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb"');
-//     service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb")
-//   })
-  .then(characteristic => {
-    // Cache the characteristic
-    mostralog('characteristic');
-    printCharacteristic = characteristic;
-    let encoder = new TextEncoder("utf-8");
-    // Add line feed + carriage return chars to text
-    let text = encoder.encode('Test de impressao' + '\u000A\u000D');
-    return printCharacteristic.writeValue(text).then(() => {
-      mostralog.log('Write done.');
-    });
-  })
-  .catch(error => { mostralog(error) });
+  .then(_ => readTeste )
+  .catch(error => { mostralog('readBatteryLevel', error) });
 }
   
-  function escreva2(){
-    genericDevice.writeTeste2("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
+  function escreva(){
+    genericDevice.writeTeste("Um segundo teste testes....testes....testes....testes....testes....testes....testes....testes....")
   }
 
 </script>
