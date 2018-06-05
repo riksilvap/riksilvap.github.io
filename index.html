@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar4()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar6()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -34,7 +34,7 @@ function sendTextData(texto) {
   let encoder = new TextEncoder("utf-8");
   // Add line feed + carriage return chars to text
   let text = encoder.encode(texto + '\u000A\u000D');
-  return printCharacteristic.writeValue(text).then(() => {
+  return printCharacteristic.writeValue(texto).then(() => {
     mostralog('Write done.');
   });
 }
