@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar3()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar4()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -58,11 +58,11 @@ function conectar () {
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
-      sendPrinterData('Isso é um teste...Isso é um teste...Isso é um teste...Isso é um teste...');
+      sendTextData('Isso é um teste...Isso é um teste...Isso é um teste...Isso é um teste...');
     })
     .catch(handleError);
   } else {
-    sendPrinterData('Segundo testeSegundo testeSegundo testeSegundo testeSegundo testeSegundo teste');
+    sendTextData('Segundo testeSegundo testeSegundo \n\n\ntesteSegundo testeSegundo testeSegundo teste');
   }
 };
 </script>
