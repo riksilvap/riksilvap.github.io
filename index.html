@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar11()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar12()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -58,9 +58,9 @@ function conectar () {
       mostralog('Connecting to GATT Server...');
       return device.gatt.connect();
     })
-    
+//     00002af1-0000-1000-8000-00805f9b34fb
     .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    .then(service => service.getCharacteristic("000018f0-0000-1000-8000-00805f9b34fb"))
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
