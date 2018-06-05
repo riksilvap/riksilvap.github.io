@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar7()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar8()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -34,7 +34,7 @@ function sendTextData(texto) {
   let encoder = new TextEncoder("utf-8");
   // Add line feed + carriage return chars to text
   let text = encoder.encode(texto + '\u000A\u000D');
-  return printCharacteristic.writeValue(texto).then(() => {
+  return printCharacteristic.writeValue(text).then(() => {
     mostralog('Write done.');
   });
 }
@@ -58,7 +58,7 @@ function conectar () {
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
-      sendTextData('Isso é um teste...Isso é um teste...Isso é um teste...Isso é um teste...');
+      sendTextData('Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.');
     })
     .catch(handleError);
   } else {
