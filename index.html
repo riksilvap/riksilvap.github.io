@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar2()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -38,11 +38,12 @@ function sendTextData(texto) {
     mostralog('Write done.');
   });
 }
-
+//e7810a71-73ae-499d-8c15-faa9aef0c3f2
+//000018f0-0000-1000-8000-00805f9b34fb
 function conectar () {
   if (printCharacteristic == null) {
     let options = {
-      filters: [ {services: ['000018f0-0000-1000-8000-00805f9b34fb']} ]
+      filters: [ {services: ['e7810a71-73ae-499d-8c15-faa9aef0c3f2']} ]
     };
     navigator.bluetooth.requestDevice(options)
     .then(device => {
@@ -50,8 +51,9 @@ function conectar () {
       mostralog('Connecting to GATT Server...');
       return device.gatt.connect();
     })
-    .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    
+    .then(server => server.getPrimaryService("e7810a71-73ae-499d-8c15-faa9aef0c3f2"))
+    .then(service => service.getCharacteristic("e7810a71-73ae-499d-8c15-faa9aef0c3f2"))
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
