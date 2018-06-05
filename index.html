@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar2()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar3()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -18,7 +18,7 @@ let data;
 
 function handleError(error) {
   console.log(error);
-  document.querySelector('#target').value += 'error' + error + '\n';
+  document.querySelector('#target').value += 'error' + error ;
 
 }
 
@@ -26,7 +26,7 @@ function sendtextarea(){
    sendTextData(document.querySelector('#target').value);
 }
 function mostralog(line){
-   document.querySelector('#target').value += line + '\n';
+   document.querySelector('#target').value += line ;
 };
 
 function sendTextData(texto) {
@@ -43,7 +43,8 @@ function sendTextData(texto) {
 function conectar () {
   if (printCharacteristic == null) {
     let options = {
-      filters: [ {services: ['e7810a71-73ae-499d-8c15-faa9aef0c3f2']} ]
+      optionalServices: ['e7810a71-73ae-499d-8c15-faa9aef0c3f2'],
+      "acceptAllDevices": true
     };
     navigator.bluetooth.requestDevice(options)
     .then(device => {
