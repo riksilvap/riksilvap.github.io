@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar14()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar15()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
@@ -43,7 +43,7 @@ function sendTextData(texto) {
   
        for(var i in linha){
          alert(linha[i]);
-         let text = encoder.encode(linha[i]);
+         let text = encoder.encode(linha[i] + '\u000A\u000D');
          printCharacteristic.writeValue(text).then(() => {
             mostralog('Write done.');
           });
