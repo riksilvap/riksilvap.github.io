@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar26()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar28()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -55,6 +55,7 @@ function sendTextData(texto) {
       for (var x = 0; x < texto.length / dist; x++) {
 //           resultado[x] = texto.substring(0 + x * dist, (x + 1) * dist);
           let text = encoder.encode(texto.substring(0 + x * dist, (x + 1) * dist));
+         alert(texto.substring(0 + x * dist, (x + 1) * dist));
           printCharacteristic.writeValue(text);
       }
       printCharacteristic.writeValue('Fim\n').then(() => {
