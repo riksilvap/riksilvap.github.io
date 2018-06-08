@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar16()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar17()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -56,7 +56,7 @@ function sendTextData(texto) {
 function conectar () {
   if (printCharacteristic == null) {
     let options = {
-      optionalServices: ['00002af1-0000-1000-8000-00805f9b34fb'],
+      optionalServices: ['000018f0-0000-1000-8000-00805f9b34fb'],
       "acceptAllDevices": true
     };
     navigator.bluetooth.requestDevice(options)
