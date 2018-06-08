@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar18()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar19()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -40,7 +40,7 @@ function sendTextData(texto) {
   // Encode the String
   //   var encodedString = Base64.encode(texto);
   linha = texto.split("\n"); // Quebra Linha no Espaço
-    onst string ESC = "\u001B";
+    const string ESC = "\u001B";
       const string GS = "\u001D";
       const string InitializePrinter = ESC + "@";
       const string BoldOn = ESC + "E" + "\u0001";
