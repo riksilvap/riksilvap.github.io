@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar17()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar18()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -40,13 +40,25 @@ function sendTextData(texto) {
   // Encode the String
   //   var encodedString = Base64.encode(texto);
   linha = texto.split("\n"); // Quebra Linha no Espaço
-  
+    onst string ESC = "\u001B";
+      const string GS = "\u001D";
+      const string InitializePrinter = ESC + "@";
+      const string BoldOn = ESC + "E" + "\u0001";
+      const string BoldOff = ESC + "E" + "\0";
+      const string DoubleOn = GS + "!" + "\u0011";  // 2x sized text (double-high + double-wide)
+      const string DoubleOff = GS + "!" + "\0";
+
+      printCharacteristic.writeValue(InitializePrinter);
+      printCharacteristic.writeValue("Here is some normal text.");
+      printCharacteristic.writeValue(BoldOn + "Here is some bold text." + BoldOff);
+      printCharacteristic.writeValue(DoubleOn + "Here is some large text." + DoubleOff);
+
        for(var i in linha){
-         alert(linha[i]);
+         //alert(linha[i]);
          let text = encoder.encode(linha[i] + '\u000A\u000D');
-         printCharacteristic.writeValue(text).then(() => {
-            mostralog('Write done.');
-          });
+         //printCharacteristic.writeValue(text).then(() => {
+         //   mostralog('Write done.');
+         // });
        }
         
   
@@ -72,7 +84,7 @@ function conectar () {
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
-      setTimeout(sendTextData(`Lorem Ipsum é simplesmente 
+      setTimeout(sendTextData(`Lorem Ipsum  simplesmente 
                                uma simulação de texto da indústria 
                               tipográfica e de impressos, e vem sendo
                               utilizado desde o século XVI, quando um 
