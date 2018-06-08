@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar29()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar30()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -48,7 +48,9 @@ function sendTextData(texto) {
       let DoubleOff = GS + "!" + "\0";
       
       let text = encoder.encode(InitializePrinter);
-      printCharacteristic.writeValue(text);
+      printCharacteristic.writeValue(text).then(() => {
+            mostralog('Inicializou');
+         });
     
       var dist = 20;
       var resultado = new Array(parseInt(texto.length / dist));
@@ -56,7 +58,9 @@ function sendTextData(texto) {
 //           resultado[x] = texto.substring(0 + x * dist, (x + 1) * dist);
           let text = encoder.encode(texto.substring(0 + x * dist, (x + 1) * dist));
          //alert(texto.substring(0 + x * dist, (x + 1) * dist));
-          printCharacteristic.writeValue(text);
+          printCharacteristic.writeValue(text).then(() => {
+            mostralog('Ecreveu.');
+         });
       }
       printCharacteristic.writeValue('Fim\n').then(() => {
             mostralog('Tudo certo.');
