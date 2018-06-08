@@ -2,7 +2,7 @@
   <button class="btn btn-lg btn-default" onclick="conectar()">Conectar15()</button>
 </p>
 <p>
-  <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes....testes....testes....testes....testes....testes....testes....testes....')">Escreva</button>
+  <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendtextarea()">sendtextarea</button>
@@ -39,7 +39,7 @@ function sendTextData(texto) {
 
   // Encode the String
   //   var encodedString = Base64.encode(texto);
-  linha = texto.split("/n"); // Quebra Linha no Espaço
+  linha = texto.split("\n"); // Quebra Linha no Espaço
   
        for(var i in linha){
          alert(linha[i]);
