@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar25()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar26()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -90,7 +90,6 @@ function conectar () {
 //     00002af1-0000-1000-8000-00805f9b34fb
     .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => characteristic.getDescriptor('gatt.characteristic_user_description'))
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
