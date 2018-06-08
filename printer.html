@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar36()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar37()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -36,7 +36,7 @@ function printTextQuebrado(resolve, reject) {
  // Need to send the image data in 512 byte batches
  let encoder = new TextEncoder("utf-8");
  let text = encoder.encode(texto.substring(0 + x * dist, (x + 1) * dist));
- alert(texto.substring(0 + x * dist, (x + 1) * dist));
+ //alert(texto.substring(0 + x * dist, (x + 1) * dist));
 
  if ( x < texto.length / dist) {
    printCharacteristic.writeValue(text).then(() => {
@@ -89,7 +89,7 @@ function conectar () {
       // Cache the characteristic
       printCharacteristic = characteristic;
       
-      setTimeout(sendTextData(`Lorem Ipsum  simplesmente 
+      sendTextData(`Lorem Ipsum  simplesmente 
                                uma simulação de texto da indústria 
                               tipográfica e de impressos, e vem sendo
                               utilizado desde o século XVI, quando um 
@@ -103,7 +103,7 @@ Se popularizou na década de 60, quando a Letraset
 lançou decalques contendo passagens de Lorem Ipsum, e 
 mais recentemente quando passou a ser integrado a 
 softwares de editoração eletrônica como Aldus 
-PageMaker.`), 3000)
+PageMaker.`)
       
     })
     .catch(handleError);
