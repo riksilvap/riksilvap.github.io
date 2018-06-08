@@ -1,5 +1,5 @@
 <p>
-  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar21()</button>
+  <button class="btn btn-lg btn-default" onclick="conectar()">Conectar22()</button>
 </p>
 <p>
   <button class="btn btn-lg btn-default" onclick="sendTextData('testes....testes\n....testes\n....testes....testes\n....testes....testes\n....testes....testes....')">Escreva Teste</button>
@@ -46,18 +46,19 @@ function sendTextData(texto) {
       let BoldOff = ESC + "E" + "\0";
       let DoubleOn = GS + "!" + "\u0011";  // 2x sized text (double-high + double-wide)
       let DoubleOff = GS + "!" + "\0";
-
-      printCharacteristic.writeValue(Base64.encode(InitializePrinter));
+      
+      let text = encoder.encode(InitializePrinter);
+      printCharacteristic.writeValue(text);
 //       printCharacteristic.writeValue("Here is some normal text.");
 //       printCharacteristic.writeValue(BoldOn + "Here is some bold text." + BoldOff);
 //       printCharacteristic.writeValue(DoubleOn + "Here is some large text." + DoubleOff);
 
        for(var i in linha){
-         //alert(linha[i]);
+         alert(linha[i]);
          // Encode the String
-          let encodedString = Base64.encode(linha[i]);
-//          let text = encoder.encode(linha[i] + '\u000A\u000D');
-         printCharacteristic.writeValue(encodedString).then(() => {
+//           let encodedString = Base64.encode(linha[i]);
+         let text = encoder.encode(linha[i] + '\u000A\u000D');
+         printCharacteristic.writeValue(text).then(() => {
             mostralog('Write done.');
          });
        }
@@ -82,9 +83,15 @@ function conectar () {
 //     00002af1-0000-1000-8000-00805f9b34fb
     .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
     .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+    .then(descriptor => descriptor.readValue())
+    .then(value => {
+      let decoder = new TextDecoder('utf-8');
+      mostralog('User Description: ' + decoder.decode(value));
+    })
     .then(characteristic => {
       // Cache the characteristic
       printCharacteristic = characteristic;
+      
       setTimeout(sendTextData(`Lorem Ipsum  simplesmente 
                                uma simulação de texto da indústria 
                               tipográfica e de impressos, e vem sendo
